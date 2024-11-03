@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <ul>
+        {{#each products}}
+            <li>{{this.title}} - ${{this.price}} <a href="/api/products/{{this.id}}" onclick="deleteProduct('{{this.id}}')">Eliminar</a></li>
+        {{/each}}
+    </ul>
+    <script>
+        function deleteProduct(id) {
+            fetch(`/api/products/${id}`, { method: 'DELETE' })
+                .then(() => location.reload());
+        }
+    </script>
+</body>
+</html>

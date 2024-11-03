@@ -8,8 +8,8 @@ const getAllProducts = (req, res) => {
     if (limit) {
         return res.json(products.slice(0, limit));
     }
-    res.json(products)
-}
+    res.json(products);
+};
 
 const getProductById = (req, res) => {
     const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
@@ -19,22 +19,22 @@ const getProductById = (req, res) => {
 };
 
 const addProduct = (req, res) => {
-    const { title, description, code, price, stock, category, thumbnails } = req.body;
-    if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios, excepto thumbnails' });
+    const { title, price } = req.body;
+    if (!title || !price) {
+        return res.status(400).json({ error: 'El título y el precio son obligatorios' });
     }
-    
+
     const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
     const newProduct = {
         id: String(products.length + 1),
         title,
-        description,
-        code,
-        price,
+        description: '',
+        code: '',
+        price: parseFloat(price),
         status: true,
-        stock,
-        category,
-        thumbnails: thumbnails || []
+        stock: 0,
+        category: '',
+        thumbnails: []
     };
 
     products.push(newProduct);
