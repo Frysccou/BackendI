@@ -1,8 +1,7 @@
-const express = require('express');
-const app = require('./src/app');
+const app = require('./app');
 const http = require('http');
 const { Server } = require('socket.io');
-const productsController = require('./src/controllers/products.controller');
+const productsController = require('./controllers/productsController');
 const fs = require('fs');
 const path = require('path');
 const productsFilePath = path.join(__dirname, './src/data/products.json');

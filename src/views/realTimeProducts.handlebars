@@ -9,15 +9,36 @@
 <body>
     <h1>Productos en Tiempo Real</h1>
     <ul id="productList">
-        {{#each products}}
-            <li id="product-{{this.id}}">{{this.title}} - ${{this.price}} <button onclick="deleteProduct('{{this.id}}')">Eliminar</button></li>
+        {{#each payload}}
+            <li id="product-{{this.id}}">
+                <strong>{{this.title}}</strong> - ${{this.price}}
+                <button onclick="deleteProduct('{{this.id}}')">Eliminar</button>
+            </li>
         {{/each}}
     </ul>
+
+    <div class="pagination">
+        {{#if hasPrevPage}}
+            <a href="?page={{prevPage}}">Anterior</a>
+        {{else}}
+            <span>Anterior</span>
+        {{/if}}
+
+        Página {{page}} de {{totalPages}}
+
+        {{#if hasNextPage}}
+            <a href="?page={{nextPage}}">Siguiente</a>
+        {{else}}
+            <span>Siguiente</span>
+        {{/if}}
+    </div>
+
     <form id="productForm">
-        <input type="text" id="title" placeholder="Titulo" required>
+        <input type="text" id="title" placeholder="Título" required>
         <input type="number" id="price" placeholder="Precio" required>
         <button type="submit">Agregar Producto</button>
     </form>
+
     <script>
         const socket = io();
 
@@ -35,7 +56,11 @@
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
             products.forEach(product => {
-                productList.innerHTML += `<li id="product-${product.id}">${product.title} - $${product.price} <button onclick="deleteProduct('${product.id}')">Eliminar</button></li>`;
+                productList.innerHTML += `
+                    <li id="product-${product.id}">
+                        <strong>${product.title}</strong> - $${product.price}
+                        <button onclick="deleteProduct('${product.id}')">Eliminar</button>
+                    </li>`;
             });
         });
 

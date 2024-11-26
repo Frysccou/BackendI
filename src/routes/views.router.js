@@ -1,21 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-const productsFilePath = path.join(__dirname, '../data/products.json');
+const productManager = require('../managers/ProductManager');
 
-const getProducts = () => {
-    return JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-};
-
-router.get('/', (req, res) => {
-    const products = getProducts();
-    res.render('home', { products });
+router.get('/', async (req, res) => {
+    const products = await productManager.getProducts({ limit: 10, page: 1 });
+    res.render('home', { products: products.payload });
 });
 
-router.get('/realtimeproducts', (req, res) => {
-    const products = getProducts();
-    res.render('realTimeProducts', { products });
+router.get('/realtimeproducts', async (req, res) => {
+    const products = await productManager.getProducts({ limit: 10, page: 1 });
+    res.render('realTimeProducts', { products: products.payload });
 });
 
 module.exports = router;
