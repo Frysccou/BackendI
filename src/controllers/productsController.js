@@ -49,7 +49,7 @@ const addProduct = async (req, res) => {
 
         const existingProduct = await Product.findOne({ code });
         if (existingProduct) {
-            return res.status(400).json({ error: 'El código ya existe' });
+            return res.status(400).json({ error: 'El codigo ya existe jaja' });
         }
 
         const newProduct = new Product({

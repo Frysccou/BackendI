@@ -15,7 +15,7 @@ const getCartProducts = async (req, res) => {
     try {
         const cart = await Cart.findById(req.params.cid).populate('products.product');
         if (!cart) return res.status(404).json({ error: 'Carrito no encontrado' });
-        res.json(cart.products.length ? cart.products : { message: 'El carrito está vacío' });
+        res.json(cart.products.length ? cart.products : { message: 'El carrito está vacio' });
     } catch {
         res.status(500).json({ error: 'Error al obtener los productos del carrito' });
     }
